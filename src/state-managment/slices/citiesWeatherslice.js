@@ -1,22 +1,28 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { API_KEY, API_URL } from "../../core/constants/index"
-
+import { API_KEY } from "../../core/constants/index";
 
 const initialState = {
   data: [],
   error: null,
-  loading: false
+  loading: false,
 };
 
 export const fetchCitiesData = createAsyncThunk(
   "cities/fetchCitiesData",
-  async () => {
-    const response = await fetch(`${API_URL}${API_KEY}`);
-    if (!response.ok) {
-      throw new Error("Failed to fetch cities data");
+  async (cities, { rejectWithValue }) => {
+    try {
+      const requests = cities.map((city) =>
+        fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${API_KEY}`).then((resp) => {
+          if (!resp.ok) throw new Error(`Ошибка: ${city} не найден`);
+          return resp.json();
+        })
+      );
+
+      const results = await Promise.all(requests);
+      return results;
+    } catch (error) {
+      return rejectWithValue(error.message);
     }
-    const data = await response.json();
-    return data;
   }
 );
 
@@ -28,20 +34,17 @@ const citiesWeatherSlice = createSlice({
     builder
       .addCase(fetchCitiesData.pending, (state) => {
         state.loading = true;
+        state.error = null;
       })
       .addCase(fetchCitiesData.fulfilled, (state, action) => {
         state.loading = false;
-        if (action.payload) {
-          state.data = action.payload;
-        } else {
-          state.data = [];
-        }
+        state.data = action.payload; 
       })
       .addCase(fetchCitiesData.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message;
+        state.error = action.payload;
       });
-  }
+  },
 });
 
 export default citiesWeatherSlice.reducer;

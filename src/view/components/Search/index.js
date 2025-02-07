@@ -8,21 +8,21 @@ import "./index.css"
 const { Search } = Input;
 
 const SearchLocation = () => {
-  const dispatch = useDispatch();
-  const { selectedCities, maxValue } = useSelector((state) => state.locations);
-  const [ searchTerm, setSearchTerm ] = useState("");
-  const [ suggestions, setSuggestions ] = useState([]);
+    const dispatch = useDispatch();
+    const { selectedCities, maxValue } = useSelector((state) => state.locations);
+    const [ searchTerm, setSearchTerm ] = useState("");
+    const [ suggestions, setSuggestions ] = useState([]);
 
-  const fetchLocations = async (query) => {
+    const fetchLocations = async (query) => {
         if (!query) return setSuggestions([]);
         
         const response = await fetch(
-        `http://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=3&appid=${API_KEY}`
+            `http://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=5&appid=${API_KEY}`
         );
 
         if (response.ok) {
-        const data = await response.json();
-        setSuggestions(data);
+            const data = await response.json();
+            setSuggestions(data);
         }
     };
 

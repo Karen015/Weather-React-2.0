@@ -1,0 +1,34 @@
+.info_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+}
+.card_container {
+    display: flex;
+    justify-content: space-between;
+    box-shadow: 0 0 10px #ccc;
+    border-radius: 10px;
+    width: 90%;
+    padding: 20px;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+}
+.weather_card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    box-shadow: 0 0 10px #ccc;
+    padding: 10px;
+    transition: 0.5s;
+    border-radius: 10px;
+    width: 17%;
+}
+.weather_card:hover {
+    box-shadow: 0 0 20px #ccc;
+    cursor: pointer;
+    background-color: #ccc;
+}

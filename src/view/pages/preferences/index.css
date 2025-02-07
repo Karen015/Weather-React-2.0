@@ -14,7 +14,18 @@
     
 }
 
-.options_contanier {
+.checkbox_container {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: start;
+    flex-direction: column;
+    box-shadow: 0 0 10px #ccc;
+    width: 35%;
+    padding: 20px;
+    border-radius: 5px;
+    min-height: 15vh;
+}
+    .radio_contanier {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
@@ -41,6 +52,7 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
+    flex-wrap: nowrap;
     width: 100%;
 }
 
